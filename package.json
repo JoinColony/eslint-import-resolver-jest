@@ -1,0 +1,34 @@
+{
+  "name": "eslint-import-resolver-jest",
+  "version": "1.0.0",
+  "description": "Jest import resolution plugin for eslint-plugin-import 👞 ✅",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JoinColony/eslint-import-resolver-jest"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "jest",
+    "resolver",
+    "eslint-plugin-import"
+  ],
+  "author": "Christian Maniewski <chmanie@fastmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoinColony/eslint-import-resolver-jest/issues"
+  },
+  "homepage": "https://github.com/JoinColony/eslint-import-resolver-jest",
+  "dependencies": {
+    "find-root": "^1.0.0",
+    "micromatch": "^2.3.11"
+  },
+  "peerDependencies": {
+    "eslint-plugin-import": ">=1.4.0"
+  },
+  "devDependencies": {}
+}
