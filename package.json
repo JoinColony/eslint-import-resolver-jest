@@ -30,5 +30,11 @@
   "peerDependencies": {
     "eslint-plugin-import": ">=1.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^19.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true
+  }
 }

@@ -32,6 +32,7 @@ exports.resolve = function (source, file, config) {
 
 function getJestConfig(file, config, root) {
   var jestConfig;
+  config = config || {};
   if (config.jestConfigFile) {
     jestConfig = require(path.resolve(root, config.jestConfigFile));
   } else {
@@ -45,7 +46,7 @@ function getJestConfig(file, config, root) {
 }
 
 function getMappedPath(source, config, root) {
-  var moduleNameMappers = Object.keys(config.moduleNameMapper);
+  var moduleNameMappers = Object.keys(config.moduleNameMapper || {});
   for (var i = 0; i < moduleNameMappers.length; i++) {
     if (new RegExp(moduleNameMappers[i]).test(source)) {
       var modulePath = config.moduleNameMapper[moduleNameMappers[i]].replace('<rootDir>/', '');

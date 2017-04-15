@@ -1,0 +1,6 @@
+{
+  "moduleNameMapper": {
+    "^resolveme$": "/src/resolved.js"
+  },
+  "rootDir": "foo"
+}

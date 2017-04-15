@@ -1,0 +1,6 @@
+{
+  "testRegex": "__testsconfig__",
+  "moduleNameMapper": {
+    "^jestconfigresolve$": "/src/resolved.js"
+  }
+}

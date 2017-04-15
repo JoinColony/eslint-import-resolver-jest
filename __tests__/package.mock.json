@@ -1,0 +1,8 @@
+{
+  "jest": {
+    "testMatch": ["**/__tests__/*"],
+    "moduleNameMapper": {
+      "^resolveme$": "/src/resolved.js"
+    }
+  }
+}
