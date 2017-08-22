@@ -48,8 +48,11 @@ function getJestConfig(file, config, root) {
 function getMappedPath(source, config, root) {
   var moduleNameMappers = Object.keys(config.moduleNameMapper || {});
   for (var i = 0; i < moduleNameMappers.length; i++) {
-    if (new RegExp(moduleNameMappers[i]).test(source)) {
-      var modulePath = config.moduleNameMapper[moduleNameMappers[i]].replace('<rootDir>/', '');
+    var regex = new RegExp(moduleNameMappers[i]);
+    if (regex.test(source)) {
+      var targetPath = config.moduleNameMapper[moduleNameMappers[i]];
+      var modulePath = source.replace(regex, targetPath).replace('<rootDir>/', '');
+
       var rootDir;
       if (config.rootDir) {
         rootDir = path.resolve(root, config.rootDir);
