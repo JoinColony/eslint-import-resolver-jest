@@ -1,6 +1,6 @@
 {
   "name": "eslint-import-resolver-jest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Jest import resolution plugin for eslint-plugin-import 👞 ✅",
   "main": "index.js",
   "scripts": {
