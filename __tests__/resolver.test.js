@@ -18,6 +18,17 @@ test('Get jest config from package.json', () => {
   });
 });
 
+test('Resolves when moduleNameMapper uses regex and <rootDir>', () => {
+  path.resolve.mockImplementationOnce(() => {
+    return './__tests__/package.regex.mock.json';
+  });
+  const result = jestResolver.resolve('test-dir/resolved', '__tests__/iamtest.js');
+  expect(result).toEqual({
+    found: true,
+    path: `${process.cwd()}/src/resolved.js`
+  });
+});
+
 test('Does not resolve when it is not a test', () => {
   path.resolve.mockImplementationOnce(() => {
     return './__tests__/package.mock.json';
