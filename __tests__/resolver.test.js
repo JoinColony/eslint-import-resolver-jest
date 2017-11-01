@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 var jestResolver = require('..');
 var path = require('path');
 

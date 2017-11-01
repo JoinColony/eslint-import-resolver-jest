@@ -12,23 +12,23 @@ var jestDefaultConfig = {
 exports.resolve = function (source, file, config) {
   var matches;
   var root = findRoot(file);
-  var config = getJestConfig(file, config, root);
-  if (config.testRegex) {
-    matches = new RegExp(config.testRegex).test(file);
+  var jestConfig = getJestConfig(file, config, root);
+  if (jestConfig.testRegex) {
+    matches = new RegExp(jestConfig.testRegex).test(file);
   } else {
-    matches = !!mm(file, config.testMatch).length;
+    matches = !!mm(file, jestConfig.testMatch).length;
   }
-  if (!matches) { return { found: false } }
+  if (!matches) { return { found: false }; }
 
-  var path = getMappedPath(source, config, root);
+  var path = getMappedPath(source, jestConfig, root);
 
-  if (!path) { return { found: false } };
+  if (!path) { return { found: false }; }
 
   return {
     found: true,
     path: path
   };
-}
+};
 
 function getJestConfig(file, config, root) {
   var jestConfig;
