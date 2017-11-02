@@ -1,0 +1,8 @@
+{
+  "testMatch": ["**/__tests__/*"],
+  "moduleFileExtensions": ["js", "json"],
+  "moduleNameMapper": {
+    "^resolveme/(.+)": "$1"
+  },
+  "rootDir": "src"
+}
