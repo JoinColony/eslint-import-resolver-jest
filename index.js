@@ -6,14 +6,15 @@ var mm = require('micromatch');
 
 var JEST_ROOT_DIR_PREFIX = '<rootDir>/';
 
-exports.interfaceVersion = 2;
-
 // Default values defined by Jest that are required by this resolution process
-var jestDefaultConfig = {
+var JEST_DEFAULT_CONFIG = {
   moduleFileExtensions: ["js", "json", "jsx", "node"],
   moduleNameMapper: {},
-  testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)']
+  testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
+  moduleDirectories: ['node_modules']
 };
+
+exports.interfaceVersion = 2;
 
 exports.resolve = function (source, file, config) {
   var matches;
@@ -21,6 +22,9 @@ exports.resolve = function (source, file, config) {
   var jestConfig = getJestConfig(file, config, root);
   var resolvedMatchers;
   var rootDir = getRootDir(jestConfig, root);
+
+  // // eslint-disable-next-line
+  // console.log(source);
 
   if (jestConfig.testRegex) {
     matches = new RegExp(jestConfig.testRegex).test(file);
@@ -30,6 +34,16 @@ exports.resolve = function (source, file, config) {
   }
   if (!matches) {
     return {found: false};
+  }
+
+  if (jestConfig.moduleDirectories) {
+    var modulePath = getMappedModules(source, jestConfig.moduleDirectories, rootDir);
+    if (modulePath) {
+      return {
+        found: true,
+        path: modulePath,
+      };
+    }
   }
 
   var path = getMappedPath(source, jestConfig.moduleNameMapper, jestConfig.moduleFileExtensions, rootDir);
@@ -63,16 +77,10 @@ function getJestConfig(file, config, root) {
     jestConfig = packageJson.jest;
   }
   if (!jestConfig.testMatch && !jestConfig.testRegex) {
-    jestConfig.testMatch = jestDefaultConfig.testMatch;
+    jestConfig.testMatch = JEST_DEFAULT_CONFIG.testMatch;
   }
 
-  if (!jestConfig.moduleFileExtensions) {
-    jestConfig.moduleFileExtensions = jestDefaultConfig.moduleFileExtensions;
-  }
-
-  if (!jestConfig.moduleNameMapper) {
-    jestConfig.moduleNameMapper = jestDefaultConfig.moduleNameMapper;
-  }
+  jestConfig = Object.assign({}, JEST_DEFAULT_CONFIG, jestConfig);
 
   return jestConfig;
 }
@@ -113,7 +121,7 @@ function getRootDir(config, root) {
 }
 
 /**
- * Resolve a module path with a root directory.  If no file extension is provided use a list of lookup extensions to append to the path.
+ * Resolve a module path with a root directory. If no file extension is provided use a list of lookup extensions to append to the path.
  * Will also attempt to resolve to an index file
  * @param {String} modulePath
  * @param {String[]} extensions extensions to
@@ -140,7 +148,6 @@ function resolvePath(modulePath, extensions, rootDir) {
       return index;
     }
   }
-  return undefined;
 }
 
 /**
@@ -158,4 +165,20 @@ function resolveTestMatchers(testMatch, rootDir) {
       return matcher;
     }
   });
+}
+
+/**
+ * Check if module exists in custom module directories
+ * @param source Import path found within a Jest test file
+ * @param {String[]} moduleDirectories custom module directories to look in for a certain module
+ * @param {String} rootDir full working path
+ * @returns {String?} Resolved module path
+ */
+function getMappedModules(source, moduleDirectories, rootDir) {
+  for (var i = 0; i < moduleDirectories.length; i++) {
+    var modulePath = path.resolve(rootDir, moduleDirectories[i], source);
+    if (fs.existsSync(modulePath)) {
+      return modulePath;
+    }
+  }
 }

@@ -147,3 +147,16 @@ test('Does not resolve when source has no extension and the file cannot be found
     found: false
   });
 });
+
+test('Resolves modules defined with the moduleDirectories option', () => {
+  fs.existsSync.mockImplementation((path) => path.endsWith('custom_modules/coolcustommodule'));
+
+  const result = jestResolver.resolve('coolcustommodule', '__tests__/iamtest.js', {
+    jestConfigFile: '__tests__/jest.config.moduleDirectories.json'
+  });
+
+  expect(result).toEqual({
+    found: true,
+    path: `${process.cwd()}/custom_modules/coolcustommodule`
+  });
+});
