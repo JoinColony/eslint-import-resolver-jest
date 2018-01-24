@@ -49,3 +49,7 @@ Create issues in this repo or get active yourself:
 ```shell
 yarn test # npm test works, too
 ```
+
+### License
+
+MIT
