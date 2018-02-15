@@ -33,11 +33,11 @@ exports.resolve = function (source, file, config) {
     matches = !!mm(file, resolvedMatchers).length;
   }
   if (!matches) {
-    return {found: false};
+    return { found: false };
   }
 
   if (jestConfig.moduleDirectories) {
-    var modulePath = getMappedModules(source, jestConfig.moduleDirectories, rootDir);
+    var modulePath = getMappedModules(source, jestConfig.moduleDirectories, rootDir, jestConfig.moduleFileExtensions);
     if (modulePath) {
       return {
         found: true,
@@ -49,7 +49,7 @@ exports.resolve = function (source, file, config) {
   var path = getMappedPath(source, jestConfig.moduleNameMapper, jestConfig.moduleFileExtensions, rootDir);
 
   if (!path) {
-    return {found: false};
+    return { found: false };
   }
 
   return {
@@ -174,11 +174,24 @@ function resolveTestMatchers(testMatch, rootDir) {
  * @param {String} rootDir full working path
  * @returns {String?} Resolved module path
  */
-function getMappedModules(source, moduleDirectories, rootDir) {
+function getMappedModules(source, moduleDirectories, rootDir, extensions) {
   for (var i = 0; i < moduleDirectories.length; i++) {
     var modulePath = path.resolve(rootDir, moduleDirectories[i], source);
     if (fs.existsSync(modulePath)) {
       return modulePath;
+    }
+    for (var j = 0; j < extensions.length; j++) {
+      var ext = extensions[j];
+      var pathWithExt = `${modulePath}.${ext}`;
+
+      if (fs.existsSync(pathWithExt)) {
+        return pathWithExt;
+      }
+
+      var index = path.join(modulePath, `index.${ext}`);
+      if (fs.existsSync(index)) {
+        return index;
+      }
     }
   }
 }
