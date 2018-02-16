@@ -1,30 +1,27 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var findRoot = require('find-root');
-var mm = require('micromatch');
+const findRoot = require('find-root');
+const mm = require('micromatch');
 
-var JEST_ROOT_DIR_PREFIX = '<rootDir>/';
+const JEST_ROOT_DIR_PREFIX = '<rootDir>/';
 
 // Default values defined by Jest that are required by this resolution process
-var JEST_DEFAULT_CONFIG = {
-  moduleFileExtensions: ["js", "json", "jsx", "node"],
+const JEST_DEFAULT_CONFIG = {
+  moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
   moduleNameMapper: {},
   testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
-  moduleDirectories: ['node_modules']
+  moduleDirectories: ['node_modules'],
 };
 
 exports.interfaceVersion = 2;
 
-exports.resolve = function (source, file, config) {
-  var matches;
-  var root = findRoot(file);
-  var jestConfig = getJestConfig(file, config, root);
-  var resolvedMatchers;
-  var rootDir = getRootDir(jestConfig, root);
-
-  // // eslint-disable-next-line
-  // console.log(source);
+exports.resolve = function resolve(source, file, config) {
+  let matches;
+  const root = findRoot(file);
+  const jestConfig = getJestConfig(file, config, root);
+  let resolvedMatchers;
+  const rootDir = getRootDir(jestConfig, root);
 
   if (jestConfig.testRegex) {
     matches = new RegExp(jestConfig.testRegex).test(file);
@@ -33,28 +30,35 @@ exports.resolve = function (source, file, config) {
     matches = !!mm(file, resolvedMatchers).length;
   }
   if (!matches) {
-    return {found: false};
+    return { found: false };
   }
 
-  if (jestConfig.moduleDirectories) {
-    var modulePath = getMappedModules(source, jestConfig.moduleDirectories, rootDir);
-    if (modulePath) {
-      return {
-        found: true,
-        path: modulePath,
-      };
-    }
+  const modulePath = getMappedModules(
+    source,
+    jestConfig.moduleDirectories,
+    rootDir,
+  );
+  if (modulePath) {
+    return {
+      found: true,
+      path: modulePath,
+    };
   }
 
-  var path = getMappedPath(source, jestConfig.moduleNameMapper, jestConfig.moduleFileExtensions, rootDir);
+  const mappedPath = getMappedPath(
+    source,
+    jestConfig.moduleNameMapper,
+    jestConfig.moduleFileExtensions,
+    rootDir,
+  );
 
-  if (!path) {
-    return {found: false};
+  if (!mappedPath) {
+    return { found: false };
   }
 
   return {
     found: true,
-    path: path
+    path: mappedPath,
   };
 };
 
@@ -67,13 +71,12 @@ exports.resolve = function (source, file, config) {
  * @param root directory where the package.json was located
  * @returns {Object}
  */
-function getJestConfig(file, config, root) {
-  var jestConfig;
-  config = config || {};
+function getJestConfig(file, config = {}, root) {
+  let jestConfig;
   if (config.jestConfigFile) {
     jestConfig = require(path.resolve(root, config.jestConfigFile));
   } else {
-    var packageJson = require(path.resolve(root, 'package.json'));
+    const packageJson = require(path.resolve(root, 'package.json'));
     jestConfig = packageJson.jest;
   }
   if (!jestConfig.testMatch && !jestConfig.testRegex) {
@@ -93,17 +96,21 @@ function getJestConfig(file, config, root) {
  * @param rootDir full working path
  * @returns {?String}
  */
+
 function getMappedPath(source, moduleNameMapper, extensions, rootDir) {
-  var moduleNameMappers = Object.keys(moduleNameMapper);
-  for (var i = 0; i < moduleNameMappers.length; i++) {
-    var regex = new RegExp(moduleNameMappers[i]);
+  const moduleNameMappers = Object.keys(moduleNameMapper);
+  for (let i = 0; i < moduleNameMappers.length; i += 1) {
+    const regex = new RegExp(moduleNameMappers[i]);
     if (regex.test(source)) {
-      var targetPath = moduleNameMapper[moduleNameMappers[i]];
-      var modulePath = source.replace(regex, targetPath).replace(JEST_ROOT_DIR_PREFIX, '');
+      const targetPath = moduleNameMapper[moduleNameMappers[i]];
+      const modulePath = source
+        .replace(regex, targetPath)
+        .replace(JEST_ROOT_DIR_PREFIX, '');
 
       return resolvePath(modulePath, extensions, rootDir);
     }
   }
+  return null;
 }
 
 /**
@@ -115,9 +122,8 @@ function getMappedPath(source, moduleNameMapper, extensions, rootDir) {
 function getRootDir(config, root) {
   if (config.rootDir) {
     return path.resolve(root, config.rootDir);
-  } else {
-    return root;
   }
+  return root;
 }
 
 /**
@@ -129,25 +135,27 @@ function getRootDir(config, root) {
  * @returns {?String} Resolved rootDir/modulePath or rootDir/modulePath.ext or rootDir/modulePath/index.ext
  */
 function resolvePath(modulePath, extensions, rootDir) {
-  var mappedPath = path.resolve(rootDir, modulePath);
+  const mappedPath = path.resolve(rootDir, modulePath);
 
   if (path.extname(mappedPath)) {
     return mappedPath;
   }
 
-  for (var i = 0; i < extensions.length; i++) {
-    var ext = extensions[i];
-    var pathWithExt = `${mappedPath}.${ext}`;
+  for (let i = 0; i < extensions.length; i += 1) {
+    const ext = extensions[i];
+    const pathWithExt = `${mappedPath}.${ext}`;
 
     if (fs.existsSync(pathWithExt)) {
       return pathWithExt;
     }
 
-    var index = path.join(mappedPath, `index.${ext}`);
+    const index = path.join(mappedPath, `index.${ext}`);
     if (fs.existsSync(index)) {
       return index;
     }
   }
+
+  return null;
 }
 
 /**
@@ -157,13 +165,11 @@ function resolvePath(modulePath, extensions, rootDir) {
  * @returns {Array}
  */
 function resolveTestMatchers(testMatch, rootDir) {
-
-  return testMatch.map(function (matcher) {
+  return testMatch.map(matcher => {
     if (matcher.startsWith(JEST_ROOT_DIR_PREFIX)) {
       return path.join(rootDir, matcher.replace(JEST_ROOT_DIR_PREFIX, ''));
-    } else {
-      return matcher;
     }
+    return matcher;
   });
 }
 
@@ -175,10 +181,11 @@ function resolveTestMatchers(testMatch, rootDir) {
  * @returns {String?} Resolved module path
  */
 function getMappedModules(source, moduleDirectories, rootDir) {
-  for (var i = 0; i < moduleDirectories.length; i++) {
-    var modulePath = path.resolve(rootDir, moduleDirectories[i], source);
+  for (let i = 0; i < moduleDirectories.length; i += 1) {
+    const modulePath = path.resolve(rootDir, moduleDirectories[i], source);
     if (fs.existsSync(modulePath)) {
       return modulePath;
     }
   }
+  return null;
 }

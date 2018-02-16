@@ -31,8 +31,16 @@
     "eslint-plugin-import": ">=1.4.0"
   },
   "devDependencies": {
-    "eslint": "^4.10.0",
-    "jest": "^19.0.2"
+    "@colony/eslint-config-colony": "^4.0.1",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.44.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "jest": "^19.0.2",
+    "prettier": "^1.10.2"
   },
   "jest": {
     "testEnvironment": "node",
