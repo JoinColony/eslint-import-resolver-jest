@@ -33,18 +33,16 @@ exports.resolve = function resolve(source, file, config) {
     return { found: false };
   }
 
-  if (jestConfig.moduleDirectories) {
-    const modulePath = getMappedModules(
-      source,
-      jestConfig.moduleDirectories,
-      rootDir,
-    );
-    if (modulePath) {
-      return {
-        found: true,
-        path: modulePath,
-      };
-    }
+  const modulePath = getMappedModules(
+    source,
+    jestConfig.moduleDirectories,
+    rootDir,
+  );
+  if (modulePath) {
+    return {
+      found: true,
+      path: modulePath,
+    };
   }
 
   const mappedPath = getMappedPath(
