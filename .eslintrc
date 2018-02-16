@@ -1,15 +1,12 @@
 {
+    "extends": "@colony/eslint-config-colony",
     "env": {
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 6
+      "node": true
     },
     "rules": {
-        "semi": [
-            "error",
-            "always"
-        ]
+      "global-require": [0],
+      "no-use-before-define": ["error", { "functions": false, "classes": true }],
+      "flowtype/require-valid-file-annotation": [0],
+      "import/no-dynamic-require": [0]
     }
 }
