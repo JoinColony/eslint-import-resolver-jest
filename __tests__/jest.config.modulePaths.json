@@ -1,0 +1,4 @@
+{
+  "rootDir": "src",
+  "modulePaths": ["/path/to/my/node_modules", "<rootDir>/modules"]
+}

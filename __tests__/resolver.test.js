@@ -221,4 +221,25 @@ describe('Jest resolver', () => {
       }),
     );
   });
+
+  test('Passes down modulePaths properly', () => {
+    path.resolve.mockImplementationOnce(
+      () => '../__tests__/jest.config.modulePaths.json',
+    );
+
+    jestResolver.resolve('someFile', '/path/to/project/__tests__/iamtest.js', {
+      jestConfigFile: '__tests__/jest.config.moduleDirectories.json',
+    });
+
+    expect(resolve.sync).toHaveBeenCalledWith(
+      'someFile',
+      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
+        moduleDirectory: [
+          'node_modules',
+          '/path/to/my/node_modules',
+          '/path/to/project/src/modules',
+        ],
+      }),
+    );
+  });
 });

@@ -19,6 +19,7 @@ type JestConfig = {
   moduleDirectories: Array<string>,
   moduleFileExtensions: Array<string>,
   moduleNameMapper: { [string]: string },
+  modulePaths: Array<string>,
   rootDir: string,
   testRegex?: string,
   testMatch: Array<string>,
@@ -34,6 +35,7 @@ const JEST_DEFAULT_CONFIG = {
   moduleDirectories: ['node_modules'],
   moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
   moduleNameMapper: {},
+  modulePaths: [],
   rootDir: '',
   testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)'],
 };
@@ -120,14 +122,16 @@ function applyModuleNameMapper(jestConfig: JestConfig, source: Path): Path {
  * Will also attempt to resolve to an index file
  * Furthermore it'll look in moduleDirectories, if supplied
  */
-function resolvePath(
-  { moduleDirectories, moduleFileExtensions }: JestConfig,
-  pathToResolve: Path,
-): Path {
+function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
+  const { moduleDirectories, moduleFileExtensions, modulePaths } = jestConfig;
+  const absoluteModulePaths = modulePaths.map(
+    mPath =>
+      path.isAbsolute(mPath) ? mPath : getAbsolutePath(jestConfig, mPath),
+  );
   try {
     return resolve.sync(pathToResolve, {
       extensions: moduleFileExtensions.map(ext => `.${ext}`),
-      moduleDirectory: moduleDirectories,
+      moduleDirectory: moduleDirectories.concat(absoluteModulePaths),
     });
   } catch (e) {
     return '';
