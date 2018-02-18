@@ -1,8 +1,9 @@
 {
   "jest": {
     "testMatch": ["**/__tests__/*"],
+    "rootDir": "src",
     "moduleNameMapper": {
-      "^test-dir(.*)$": "<rootDir>/src$1.js"
+      "^test-dir(.*)$": "<rootDir>$1.js"
     }
   }
 }

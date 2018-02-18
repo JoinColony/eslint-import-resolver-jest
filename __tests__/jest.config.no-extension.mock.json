@@ -1,8 +1,8 @@
 {
   "testMatch": ["**/__tests__/*"],
-  "moduleFileExtensions": ["js", "json"],
+  "moduleFileExtensions": ["ts"],
   "moduleNameMapper": {
-    "^resolveme/(.+)": "$1"
+    "^resolveme/(.+)": "<rootDir>/$1"
   },
   "rootDir": "src"
 }

@@ -1,7 +1,6 @@
 {
   "jest": {
     "testMatch": ["<rootDir>/test/unit/**/*.js?(x)"],
-    "moduleFileExtensions": ["js", "jsx"],
     "moduleNameMapper": {
       "^resolveme[/](.+)": "<rootDir>/src/$1"
     }

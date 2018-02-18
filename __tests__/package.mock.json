@@ -1,8 +1,9 @@
 {
   "jest": {
     "testMatch": ["**/__tests__/*"],
+    "rootDir": "src",
     "moduleNameMapper": {
-      "^resolveme$": "/src/resolved.js"
+      "^resolveme$": "<rootDir>/resolved.js"
     }
   }
 }

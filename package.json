@@ -2,9 +2,15 @@
   "name": "eslint-import-resolver-jest",
   "version": "1.1.0",
   "description": "🃏 Jest import resolution plugin for eslint-plugin-import",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "eslint index.js __tests__/*.js && jest"
+    "build": "yarn run build:flow && yarn run build:lib",
+    "build:flow": "flow-copy-source src lib",
+    "build:lib": "flow-remove-types src/index.js > lib/index.js",
+    "flow": "flow check",
+    "lint": "eslint index.js __tests__/*.js",
+    "test": "yarn run flow && yarn run lint && jest",
+    "test:unit": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,8 +31,15 @@
   "homepage": "https://github.com/JoinColony/eslint-import-resolver-jest",
   "dependencies": {
     "find-root": "^1.0.0",
-    "micromatch": "^2.3.11"
+    "micromatch": "^2.3.11",
+    "resolve": "^1.5.0"
   },
+  "files": [
+    "lib",
+    "Readme.md",
+    "CODE_OF_CONDUCT.md",
+    "LICENSE"
+  ],
   "peerDependencies": {
     "eslint-plugin-import": ">=1.4.0"
   },
@@ -39,11 +52,19 @@
     "eslint-plugin-flowtype": "^2.44.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "jest": "^19.0.2",
+    "flow-bin": "^0.66.0",
+    "flow-copy-source": "^1.3.0",
+    "flow-remove-types": "^1.2.3",
+    "jest": "^22.3.0",
+    "jest-flow-transform": "^1.0.1",
+    "jest-sandbox": "^1.1.1",
     "prettier": "^1.10.2"
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.js(?:\\.flow)?$": "jest-flow-transform"
+    }
   }
 }
