@@ -1949,6 +1949,10 @@ jest-runtime@^22.3.0:
     write-file-atomic "^2.1.0"
     yargs "^10.0.3"
 
+jest-sandbox@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/jest-sandbox/-/jest-sandbox-1.1.1.tgz#bf75975bbb1f6db8632acb15ecd10ac56757eb98"
+
 jest-snapshot@^22.2.0:
   version "22.2.0"
   resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-22.2.0.tgz#0c0ba152d296ef70fa198cc84977a2cc269ee4cf"
