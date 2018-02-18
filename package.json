@@ -4,7 +4,10 @@
   "description": "🃏 Jest import resolution plugin for eslint-plugin-import",
   "main": "index.js",
   "scripts": {
-    "test": "eslint index.js __tests__/*.js && jest"
+    "flow": "flow check",
+    "lint": "eslint index.js __tests__/*.js",
+    "test": "yarn run flow && yarn run lint && jest",
+    "test:unit": "jest"
   },
   "repository": {
     "type": "git",
@@ -39,11 +42,16 @@
     "eslint-plugin-flowtype": "^2.44.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "jest": "^19.0.2",
+    "flow-bin": "^0.66.0",
+    "jest": "^22.3.0",
+    "jest-flow-transform": "^1.0.1",
     "prettier": "^1.10.2"
   },
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.js(?:\\.flow)?$": "jest-flow-transform"
+    }
   }
 }
