@@ -18,7 +18,7 @@ jest.mock('fs', () => {
   return mockFs;
 });
 
-const jestResolver = require('../src/index.js');
+const jestResolver = require('../index.js');
 const resolve = require('resolve');
 const path = require('path');
 const createSandbox = require('jest-sandbox').default;
@@ -39,7 +39,7 @@ describe('Jest resolver', () => {
   afterEach(() => sandbox.clear());
 
   test('Get jest config from package.json', () => {
-    path.resolve.mockImplementationOnce(() => '../__tests__/package.mock.json');
+    path.resolve.mockImplementationOnce(() => './__tests__/package.mock.json');
 
     jestResolver.resolve(
       'resolveme',
@@ -53,7 +53,7 @@ describe('Jest resolver', () => {
 
   test('Returns proper eslint-import-resolver object', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/package.regex.mock.json',
+      () => './__tests__/package.regex.mock.json',
     );
 
     resolve.sync.mockImplementationOnce(
@@ -72,7 +72,7 @@ describe('Jest resolver', () => {
 
   test('Resolves when moduleNameMapper uses regex and <rootDir>', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/package.regex.mock.json',
+      () => './__tests__/package.regex.mock.json',
     );
 
     jestResolver.resolve(
@@ -86,7 +86,7 @@ describe('Jest resolver', () => {
   });
 
   test('Does not resolve when it is not a test', () => {
-    path.resolve.mockImplementationOnce(() => '../__tests__/package.mock.json');
+    path.resolve.mockImplementationOnce(() => './__tests__/package.mock.json');
     const result = jestResolver.resolve(
       'resolveme',
       '/path/to/project/src/iamprodcode.js',
@@ -98,7 +98,7 @@ describe('Jest resolver', () => {
 
   test('Works with external jest config file and testRegex', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.mock.json',
+      () => './__tests__/jest.config.mock.json',
     );
     jestResolver.resolve(
       'jestconfigresolve',
@@ -115,7 +115,7 @@ describe('Jest resolver', () => {
 
   test('Does not resolve when source is not in moduleNameMapper', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.mock.json',
+      () => './__tests__/jest.config.mock.json',
     );
     const result = jestResolver.resolve(
       'doesnotresolve',
@@ -131,7 +131,7 @@ describe('Jest resolver', () => {
 
   test('Apply default test matching pattern when not given and works with rootDir', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.min.mock.json',
+      () => './__tests__/jest.config.min.mock.json',
     );
     jestResolver.resolve('resolveme', '/path/to/project/__tests__/iamtest.js', {
       jestConfigFile: '__tests__/jest.config.min.mock.json',
@@ -144,7 +144,7 @@ describe('Jest resolver', () => {
 
   test('Does not do anything without config', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.none.mock.json',
+      () => './__tests__/jest.config.none.mock.json',
     );
     const result = jestResolver.resolve(
       'resolveme',
@@ -172,7 +172,7 @@ describe('Jest resolver', () => {
 
   test('Resolves when <rootDir> is in testMatch', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/package.rootdir.mock.json',
+      () => './__tests__/package.rootdir.mock.json',
     );
     jestResolver.resolve(
       'resolveme/resolved.js',
@@ -186,7 +186,7 @@ describe('Jest resolver', () => {
 
   test('Passes on moduleFileExtensions properly', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.no-extension.mock.json',
+      () => './__tests__/jest.config.no-extension.mock.json',
     );
 
     jestResolver.resolve(
@@ -207,7 +207,7 @@ describe('Jest resolver', () => {
 
   test('Resolves modules defined with the moduleDirectories option', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.moduleDirectories.json',
+      () => './__tests__/jest.config.moduleDirectories.json',
     );
 
     jestResolver.resolve('someFile', '/path/to/project/__tests__/iamtest.js', {
@@ -224,7 +224,7 @@ describe('Jest resolver', () => {
 
   test('Passes down modulePaths properly', () => {
     path.resolve.mockImplementationOnce(
-      () => '../__tests__/jest.config.modulePaths.json',
+      () => './__tests__/jest.config.modulePaths.json',
     );
 
     jestResolver.resolve('someFile', '/path/to/project/__tests__/iamtest.js', {

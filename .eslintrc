@@ -6,7 +6,6 @@
     "rules": {
       "global-require": [0],
       "no-use-before-define": ["error", { "functions": false, "classes": true }],
-      "flowtype/require-valid-file-annotation": [0],
       "import/no-dynamic-require": [0]
     }
 }

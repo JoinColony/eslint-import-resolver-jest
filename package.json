@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "yarn run build:flow && yarn run build:lib",
-    "build:flow": "flow-copy-source src lib",
+    "build:flow": "flow-copy-source src lib --ignore '__tests__/*.js'",
     "build:lib": "flow-remove-types src/index.js > lib/index.js",
     "flow": "flow check",
     "lint": "eslint index.js __tests__/*.js",
@@ -38,7 +38,8 @@
     "lib",
     "Readme.md",
     "CODE_OF_CONDUCT.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "peerDependencies": {
     "eslint-plugin-import": ">=1.4.0"
