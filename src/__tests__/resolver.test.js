@@ -43,26 +43,26 @@ describe('Jest resolver', () => {
 
     jestResolver.resolve(
       'resolveme',
-      '/path/to/project/__tests__/iamtest.test.js',
+      '/path/to/project/__tests__/iamtest.test.js'
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS,
+      DEFAULT_RESOLVER_SETTINGS
     );
   });
 
   test('Returns proper eslint-import-resolver object', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/package.regex.mock.json',
+      () => './__tests__/package.regex.mock.json'
     );
 
     resolve.sync.mockImplementationOnce(
-      () => '/path/to/project/src/resolved.js',
+      () => '/path/to/project/src/resolved.js'
     );
 
     const result = jestResolver.resolve(
       'test-dir/resolved',
-      '/path/to/project/__tests__/iamtest.test.js',
+      '/path/to/project/__tests__/iamtest.test.js'
     );
     expect(result).toEqual({
       found: true,
@@ -72,16 +72,16 @@ describe('Jest resolver', () => {
 
   test('Resolves when moduleNameMapper uses regex and <rootDir>', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/package.regex.mock.json',
+      () => './__tests__/package.regex.mock.json'
     );
 
     jestResolver.resolve(
       'test-dir/resolved',
-      '/path/to/project/__tests__/iamtest.test.js',
+      '/path/to/project/__tests__/iamtest.test.js'
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS,
+      DEFAULT_RESOLVER_SETTINGS
     );
   });
 
@@ -89,7 +89,7 @@ describe('Jest resolver', () => {
     path.resolve.mockImplementationOnce(() => './__tests__/package.mock.json');
     const result = jestResolver.resolve(
       'resolveme',
-      '/path/to/project/src/iamprodcode.js',
+      '/path/to/project/src/iamprodcode.js'
     );
     expect(result).toEqual({
       found: false,
@@ -98,31 +98,31 @@ describe('Jest resolver', () => {
 
   test('Works with external jest config file and testRegex', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.mock.json',
+      () => './__tests__/jest.config.mock.json'
     );
     jestResolver.resolve(
       'jestconfigresolve',
       '/path/to/project/__testsconfig__/iamtest.js',
       {
         jestConfigFile: '__tests__/jest.config.mock.json',
-      },
+      }
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS,
+      DEFAULT_RESOLVER_SETTINGS
     );
   });
 
   test('Does not resolve when source is not in moduleNameMapper', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.mock.json',
+      () => './__tests__/jest.config.mock.json'
     );
     const result = jestResolver.resolve(
       'doesnotresolve',
       '/path/to/project/__testsconfig__/iamtest.js',
       {
         jestConfigFile: '__tests__/jest.config.mock.json',
-      },
+      }
     );
     expect(result).toEqual({
       found: false,
@@ -131,27 +131,27 @@ describe('Jest resolver', () => {
 
   test('Apply default test matching pattern when not given and works with rootDir', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.min.mock.json',
+      () => './__tests__/jest.config.min.mock.json'
     );
     jestResolver.resolve('resolveme', '/path/to/project/__tests__/iamtest.js', {
       jestConfigFile: '__tests__/jest.config.min.mock.json',
     });
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS,
+      DEFAULT_RESOLVER_SETTINGS
     );
   });
 
   test('Does not do anything without config', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.none.mock.json',
+      () => './__tests__/jest.config.none.mock.json'
     );
     const result = jestResolver.resolve(
       'resolveme',
       '/path/to/project/__tests__/iamtest.js',
       {
         jestConfigFile: '__tests__/jest.config.none.mock.json',
-      },
+      }
     );
     expect(result).toEqual({
       found: false,
@@ -165,28 +165,28 @@ describe('Jest resolver', () => {
         '/path/to/project/__tests__/iamtest.js',
         {
           jestConfigFile: '__tests__/idonotexist.json',
-        },
+        }
       );
     }).toThrow(/not\sfound/);
   });
 
   test('Resolves when <rootDir> is in testMatch', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/package.rootdir.mock.json',
+      () => './__tests__/package.rootdir.mock.json'
     );
     jestResolver.resolve(
       'resolveme/resolved.js',
-      '/path/to/project/test/unit/iamtest.js',
+      '/path/to/project/test/unit/iamtest.js'
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS,
+      DEFAULT_RESOLVER_SETTINGS
     );
   });
 
   test('Passes on moduleFileExtensions properly', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.no-extension.mock.json',
+      () => './__tests__/jest.config.no-extension.mock.json'
     );
 
     jestResolver.resolve(
@@ -194,20 +194,20 @@ describe('Jest resolver', () => {
       '/path/to/project/__tests__/iamtest.js',
       {
         jestConfigFile: '__tests__/jest.config.no-extension.mock.json',
-      },
+      }
     );
 
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/someFile',
       Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
         extensions: ['.ts'],
-      }),
+      })
     );
   });
 
   test('Resolves modules defined with the moduleDirectories option', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.moduleDirectories.json',
+      () => './__tests__/jest.config.moduleDirectories.json'
     );
 
     jestResolver.resolve('someFile', '/path/to/project/__tests__/iamtest.js', {
@@ -218,13 +218,13 @@ describe('Jest resolver', () => {
       'someFile',
       Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
         moduleDirectory: ['custom_modules'],
-      }),
+      })
     );
   });
 
   test('Passes down modulePaths properly', () => {
     path.resolve.mockImplementationOnce(
-      () => './__tests__/jest.config.modulePaths.json',
+      () => './__tests__/jest.config.modulePaths.json'
     );
 
     jestResolver.resolve('someFile', '/path/to/project/__tests__/iamtest.js', {
@@ -239,7 +239,7 @@ describe('Jest resolver', () => {
           '/path/to/my/node_modules',
           '/path/to/project/src/modules',
         ],
-      }),
+      })
     );
   });
 });

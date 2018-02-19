@@ -45,7 +45,7 @@ exports.interfaceVersion = 2;
 exports.resolve = function resolver(
   source: Path,
   file: Path,
-  config?: ResolverConfig,
+  config?: ResolverConfig
 ): ResolverResult {
   const jestConfig = getJestConfig(config, file);
   if (!isTestFile(jestConfig, file)) {
@@ -126,7 +126,7 @@ function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
   const { moduleDirectories, moduleFileExtensions, modulePaths } = jestConfig;
   const absoluteModulePaths = modulePaths.map(
     mPath =>
-      path.isAbsolute(mPath) ? mPath : getAbsolutePath(jestConfig, mPath),
+      path.isAbsolute(mPath) ? mPath : getAbsolutePath(jestConfig, mPath)
   );
   try {
     return resolve.sync(pathToResolve, {
@@ -144,6 +144,6 @@ function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
 function getAbsolutePath(jestConfig: JestConfig, filepath: Path): Path {
   return path.join(
     jestConfig.importResolverProjectRoot,
-    filepath.replace(JEST_ROOT_DIR_PREFIX, jestConfig.rootDir),
+    filepath.replace(JEST_ROOT_DIR_PREFIX, jestConfig.rootDir)
   );
 }
