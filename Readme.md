@@ -1,5 +1,7 @@
 # eslint-import-resolver-jest
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JoinColony/eslint-import-resolver-jest.svg)](https://greenkeeper.io/)
+
 _"I like my `testutils` where I can see 'em"_ 🕵🏽‍♀️
 
 [![CircleCI](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest.svg?style=svg)](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest)
