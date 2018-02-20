@@ -2,7 +2,7 @@
 
 _"I like my `testutils` where I can see 'em"_ 🕵🏽‍♀️
 
-[![Build Status](https://travis-ci.org/JoinColony/eslint-import-resolver-jest.svg?branch=master)](https://travis-ci.org/JoinColony/eslint-import-resolver-jest)
+[![CircleCI](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest.svg?style=svg)](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest)
 
 If you're using [jest](https://facebook.github.io/jest/) and you have installed custom name mappings in your config via the `moduleNameMapper` config and you're using the wonderful [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import) you might get yelled at by eslint:
 
