@@ -62,6 +62,7 @@
     "prettier": "^1.10.2"
   },
   "jest": {
+    "testMatch": ["**/?(*.)test.js?(x)"],
     "testEnvironment": "node",
     "collectCoverage": true,
     "transform": {
