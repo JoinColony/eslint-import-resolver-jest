@@ -1,6 +1,6 @@
 {
   "name": "eslint-import-resolver-jest",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "🃏 Jest import resolution plugin for eslint-plugin-import",
   "main": "lib/index.js",
   "scripts": {
@@ -62,7 +62,9 @@
     "prettier": "^1.10.2"
   },
   "jest": {
-    "testMatch": ["**/?(*.)test.js?(x)"],
+    "testMatch": [
+      "**/?(*.)test.js?(x)"
+    ],
     "testEnvironment": "node",
     "collectCoverage": true,
     "transform": {
