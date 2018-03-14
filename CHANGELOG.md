@@ -1,5 +1,8 @@
 ## eslint-import-resolver-jest changelog
 
+### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.1.0) ] 2.1.0 / 14.03.2018
+* Support absolute rootDir paths
+
 ### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.0.1) ] 2.0.1 / 19.02.2018
 * Just some tooling rearrangements and typo fixes
 
