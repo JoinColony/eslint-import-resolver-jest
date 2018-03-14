@@ -51,6 +51,22 @@ describe('Jest resolver', () => {
     );
   });
 
+  test('Get jest config from js file using absolute path for rootDir', () => {
+    path.resolve.mockImplementationOnce(() => './__tests__/jest.config.js');
+
+    jestResolver.resolve(
+      '@/resolveme',
+      '/path/to/project/__tests__/iamtest.test.js',
+      {
+        jestConfigFile: '__tests__/jest.config.js',
+      }
+    );
+    expect(resolve.sync).toHaveBeenCalledWith(
+      '/custom/path/to/my/project/src/resolveme',
+      DEFAULT_RESOLVER_SETTINGS
+    );
+  });
+
   test('Returns proper eslint-import-resolver object', () => {
     path.resolve.mockImplementationOnce(
       () => './__tests__/package.regex.mock.json'

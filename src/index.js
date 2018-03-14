@@ -142,8 +142,12 @@ function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
  * Get the absolute path of a path, replacing the rootDir if applicable
  */
 function getAbsolutePath(jestConfig: JestConfig, filepath: Path): Path {
-  return path.join(
-    jestConfig.importResolverProjectRoot,
-    filepath.replace(JEST_ROOT_DIR_PREFIX, jestConfig.rootDir)
+  const replacedRoot = filepath.replace(
+    JEST_ROOT_DIR_PREFIX,
+    jestConfig.rootDir
   );
+  if (path.isAbsolute(jestConfig.rootDir)) {
+    return replacedRoot;
+  }
+  return path.join(jestConfig.importResolverProjectRoot, replacedRoot);
 }
