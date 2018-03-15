@@ -126,7 +126,9 @@ describe('Jest resolver', () => {
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS
+      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
+        basedir: '/path/to/project/__testsconfig__',
+      })
     );
   });
 
@@ -198,7 +200,7 @@ describe('Jest resolver', () => {
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
       Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
-        basdir: '/path/to/project/test/unit',
+        basedir: '/path/to/project/test/unit',
       })
     );
   });
