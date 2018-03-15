@@ -52,7 +52,7 @@ exports.resolve = function resolver(
     return NOTFOUND;
   }
   const pathToResolve = applyModuleNameMapper(jestConfig, source) || source;
-  const resolvedPath = resolvePath(jestConfig, pathToResolve);
+  const resolvedPath = resolvePath(jestConfig, path.dirname(file), pathToResolve);
   if (resolvedPath) {
     return {
       found: true,
@@ -122,7 +122,7 @@ function applyModuleNameMapper(jestConfig: JestConfig, source: Path): Path {
  * Will also attempt to resolve to an index file
  * Furthermore it'll look in moduleDirectories, if supplied
  */
-function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
+function resolvePath(jestConfig: JestConfig, basedir: Path, pathToResolve: Path): Path {
   const { moduleDirectories, moduleFileExtensions, modulePaths } = jestConfig;
   const absoluteModulePaths = modulePaths.map(
     mPath =>
@@ -130,6 +130,7 @@ function resolvePath(jestConfig: JestConfig, pathToResolve: Path): Path {
   );
   try {
     return resolve.sync(pathToResolve, {
+      basedir,
       extensions: moduleFileExtensions.map(ext => `.${ext}`),
       moduleDirectory: moduleDirectories.concat(absoluteModulePaths),
     });
