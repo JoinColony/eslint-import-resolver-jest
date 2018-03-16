@@ -27,6 +27,7 @@ const DEFAULT_EXTENSIONS = ['.js', '.json', '.jsx', '.node'];
 const DEFAULT_DIRECTORIES = ['node_modules'];
 
 const DEFAULT_RESOLVER_SETTINGS = {
+  basedir: '/path/to/project/__tests__',
   extensions: DEFAULT_EXTENSIONS,
   moduleDirectory: DEFAULT_DIRECTORIES,
   paths: [],
@@ -125,7 +126,9 @@ describe('Jest resolver', () => {
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS
+      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
+        basedir: '/path/to/project/__testsconfig__',
+      })
     );
   });
 
@@ -196,7 +199,9 @@ describe('Jest resolver', () => {
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      DEFAULT_RESOLVER_SETTINGS
+      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
+        basedir: '/path/to/project/test/unit',
+      })
     );
   });
 
