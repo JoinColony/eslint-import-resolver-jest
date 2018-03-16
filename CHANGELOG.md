@@ -1,5 +1,8 @@
 ## eslint-import-resolver-jest changelog
 
+### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.1.1) ] 2.1.1 / 16.03.2018
+* Start resolving from file path (by setting basedir in `resolve`)
+
 ### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.1.0) ] 2.1.0 / 14.03.2018
 * Support absolute rootDir paths
 
