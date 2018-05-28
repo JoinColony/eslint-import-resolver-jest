@@ -9,6 +9,7 @@
     "build:lib": "flow-remove-types src/index.js > lib/index.js",
     "flow": "flow check",
     "lint": "eslint index.js __tests__/*.js",
+    "prepublish": "yarn test && yarn run build",
     "test": "yarn run flow && yarn run lint && jest",
     "test:unit": "jest"
   },
