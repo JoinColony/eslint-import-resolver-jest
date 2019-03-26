@@ -178,15 +178,16 @@ describe('Jest resolver', () => {
   });
 
   test('Throws when specified config file does not exist', () => {
-    expect(() => {
-      jestResolver.resolve(
-        'resolveme',
-        '/path/to/project/__tests__/iamtest.js',
-        {
-          jestConfigFile: '__tests__/idonotexist.json',
-        }
-      );
-    }).toThrow(/not\sfound/);
+    const result = jestResolver.resolve(
+      'resolveme',
+      '/path/to/project/__tests__/iamtest.js',
+      {
+        jestConfigFile: '__tests__/idonotexist.json',
+      }
+    );
+    expect(result).toEqual({
+      found: false,
+    });
   });
 
   test('Resolves when <rootDir> is in testMatch', () => {

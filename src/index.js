@@ -48,7 +48,7 @@ exports.resolve = function resolver(
   config?: ResolverConfig
 ): ResolverResult {
   const jestConfig = getJestConfig(config, file);
-  if (!isTestFile(jestConfig, file)) {
+  if (jestConfig == null || !isTestFile(jestConfig, file)) {
     return NOTFOUND;
   }
   const pathToResolve = applyModuleNameMapper(jestConfig, source) || source;
@@ -67,7 +67,7 @@ exports.resolve = function resolver(
  * Will use jest configuration from package.json if no jestConfigFile is defined
  * Applies default configuration for any required properties that are undeclared
  */
-function getJestConfig(config?: ResolverConfig = {}, file: Path): JestConfig {
+function getJestConfig(config?: ResolverConfig = {}, file: Path): ?JestConfig {
   let jestConfig;
   const root = findRoot(file);
   if (config.jestConfigFile) {
@@ -75,7 +75,7 @@ function getJestConfig(config?: ResolverConfig = {}, file: Path): JestConfig {
     try {
       jestConfig = require(configFilePath);
     } catch (e) {
-      throw new Error(`jestConfigFile not found in ${configFilePath}`);
+      return undefined;
     }
   } else {
     const packageJson = require(path.resolve(root, 'package.json'));
