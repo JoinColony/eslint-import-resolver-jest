@@ -91,13 +91,30 @@ function getJestConfig(config?: ResolverConfig = {}, file: Path): JestConfig {
 }
 
 /*
+ * Check if we're on a Windows system
+ */
+function isWindows() {
+  return process.platform === 'win32' || path.sep === '\\';
+}
+
+/*
+ * Transform given string to a POSIX-style path.
+ */
+function toPosixSlashes(str) {
+  return str.replace(/\\/g, '/');
+}
+
+/*
  * Check whether a file is a test file to see whether this resolver is applicable
  */
 function isTestFile(config: JestConfig, file: Path): boolean {
   if (config.testRegex) {
     return new RegExp(config.testRegex).test(file);
   }
-  const testGlobs = config.testMatch.map(getAbsolutePath.bind(null, config));
+  const testGlobs = config.testMatch.map(pattern => {
+    const expandedPattern = getAbsolutePath(config, pattern);
+    return isWindows() ? toPosixSlashes(expandedPattern) : expandedPattern;
+  });
   return !!mm(file, testGlobs).length;
 }
 
