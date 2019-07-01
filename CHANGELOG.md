@@ -1,5 +1,8 @@
 ## eslint-import-resolver-jest changelog
 
+### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.1.2) ] 2.1.2 / 30.06.2019
+* Fix test match global patterns on windows (thank you @KevinSjoberg!)
+
 ### [ [>](https://github.com/JoinColony/eslint-import-resolver-jest/tree/v2.1.1) ] 2.1.1 / 16.03.2018
 * Start resolving from file path (by setting basedir in `resolve`)
 
