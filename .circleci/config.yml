@@ -1,6 +1,7 @@
 version: 2
+
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:10.16.3
 
@@ -25,3 +26,9 @@ jobs:
           $HOME/.config/yarn/global/node_modules/.bin/greenkeeper-lockfile-update
           yarn test
           $HOME/.config/yarn/global/node_modules/.bin/greenkeeper-lockfile-upload
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test
