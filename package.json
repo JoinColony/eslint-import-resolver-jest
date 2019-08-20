@@ -1,9 +1,9 @@
 {
   "name": "eslint-import-resolver-jest",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "🃏 Jest import resolution plugin for eslint-plugin-import",
-  "engines" : {
-    "node" : ">=10.0.0"
+  "engines": {
+    "node": ">=10.0.0"
   },
   "main": "lib/index.js",
   "scripts": {
