@@ -1,10 +1,23 @@
 # eslint-import-resolver-jest
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/JoinColony/eslint-import-resolver-jest.svg)](https://greenkeeper.io/)
-
 _"I like my `testutils` where I can see 'em"_ 🕵🏽‍♀️
 
-[![CircleCI](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest.svg?style=svg)](https://circleci.com/gh/JoinColony/eslint-import-resolver-jest)
+<div align="center">
+  <a href="https://circleci.com/gh/JoinColony/eslint-import-resolver-jest">
+    <img src="https://circleci.com/gh/JoinColony/eslint-import-resolver-jest.svg?style=shield"
+    title="CircleCi"/>
+  </a>
+  <a href="https://renovatebot.com/">
+    <img src="https://img.shields.io/badge/renovate-enabled-brightgreen.svg"
+    title="Renovate enabled" />
+  </a>
+  <a href="https://discord.gg/HDkjCqF">
+    <img src="https://img.shields.io/discord/562263648173555742?logo=discord" alt="Chat on Discord">
+  </a>
+  <a href="https://build.colony.io/">
+    <img src="https://img.shields.io/discourse/https/build.colony.io/status.svg" title="Contribute!" />
+  </a>
+</div>
 
 If you're using [jest](https://facebook.github.io/jest/) and you have installed custom name mappings in your config via the `moduleNameMapper` config and you're using the wonderful [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import) you might get yelled at by eslint:
 
