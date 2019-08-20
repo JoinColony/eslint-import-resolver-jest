@@ -1,8 +1,12 @@
 {
-    "extends": "@colony/eslint-config-colony",
+    "extends": [
+      "@colony/eslint-config-colony",
+      "prettier/flowtype",
+    ],
     "env": {
       "node": true
     },
+    "plugins": ["flowtype"],
     "rules": {
       "global-require": [0],
       "no-use-before-define": ["error", { "functions": false, "classes": true }],
