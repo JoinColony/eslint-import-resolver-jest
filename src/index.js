@@ -87,7 +87,7 @@ function getJestConfig(config?: ResolverConfig = {}, file: Path): JestConfig {
 
   jestConfig.importResolverProjectRoot = root;
 
-  return Object.assign({}, JEST_DEFAULT_CONFIG, jestConfig);
+  return { ...JEST_DEFAULT_CONFIG, ...jestConfig };
 }
 
 /**
@@ -117,9 +117,8 @@ function resolvePath(
   pathToResolve: Path
 ): Path {
   const { moduleDirectories, moduleFileExtensions, modulePaths } = jestConfig;
-  const absoluteModulePaths = modulePaths.map(
-    mPath =>
-      path.isAbsolute(mPath) ? mPath : getAbsolutePath(jestConfig, mPath)
+  const absoluteModulePaths = modulePaths.map(mPath =>
+    path.isAbsolute(mPath) ? mPath : getAbsolutePath(jestConfig, mPath)
   );
   try {
     return resolve.sync(pathToResolve, {

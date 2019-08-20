@@ -6,3 +6,5 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 };
+
+/* eslint-enable flowtype/require-valid-file-annotation */

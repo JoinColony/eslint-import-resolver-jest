@@ -1,27 +1,24 @@
-/* @flow */
 /* eslint-env jest */
 /* eslint max-len: 0, import/no-unresolved: 0 */
 
 jest.mock('find-root', () => jest.fn(() => '/path/to/project'));
 
 jest.mock('path', () => {
-  // $FlowFixMe https://github.com/facebook/jest/issues/4257
   const mockPath = require.requireActual('path');
   jest.spyOn(mockPath, 'resolve');
   return mockPath;
 });
 
 jest.mock('fs', () => {
-  // $FlowFixMe https://github.com/facebook/jest/issues/4257
   const mockFs = require.requireActual('fs');
   jest.spyOn(mockFs, 'existsSync');
   return mockFs;
 });
 
-const jestResolver = require('../index.js');
 const resolve = require('resolve');
 const path = require('path');
-const createSandbox = require('jest-sandbox').default;
+const createSandbox = require('jest-sandbox');
+const jestResolver = require('../index.js');
 
 const DEFAULT_EXTENSIONS = ['.js', '.json', '.jsx', '.node'];
 const DEFAULT_DIRECTORIES = ['node_modules'];
@@ -126,9 +123,10 @@ describe('Jest resolver', () => {
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
+      {
+        ...DEFAULT_RESOLVER_SETTINGS,
         basedir: '/path/to/project/__testsconfig__',
-      })
+      }
     );
   });
 
@@ -199,9 +197,7 @@ describe('Jest resolver', () => {
     );
     expect(resolve.sync).toHaveBeenCalledWith(
       '/path/to/project/src/resolved.js',
-      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
-        basedir: '/path/to/project/test/unit',
-      })
+      { ...DEFAULT_RESOLVER_SETTINGS, basedir: '/path/to/project/test/unit' }
     );
   });
 
@@ -218,12 +214,10 @@ describe('Jest resolver', () => {
       }
     );
 
-    expect(resolve.sync).toHaveBeenCalledWith(
-      '/path/to/project/src/someFile',
-      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
-        extensions: ['.ts'],
-      })
-    );
+    expect(resolve.sync).toHaveBeenCalledWith('/path/to/project/src/someFile', {
+      ...DEFAULT_RESOLVER_SETTINGS,
+      extensions: ['.ts'],
+    });
   });
 
   test('Resolves modules defined with the moduleDirectories option', () => {
@@ -235,12 +229,10 @@ describe('Jest resolver', () => {
       jestConfigFile: '__tests__/jest.config.moduleDirectories.json',
     });
 
-    expect(resolve.sync).toHaveBeenCalledWith(
-      'someFile',
-      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
-        moduleDirectory: ['custom_modules'],
-      })
-    );
+    expect(resolve.sync).toHaveBeenCalledWith('someFile', {
+      ...DEFAULT_RESOLVER_SETTINGS,
+      moduleDirectory: ['custom_modules'],
+    });
   });
 
   test('Passes down modulePaths properly', () => {
@@ -252,15 +244,13 @@ describe('Jest resolver', () => {
       jestConfigFile: '__tests__/jest.config.moduleDirectories.json',
     });
 
-    expect(resolve.sync).toHaveBeenCalledWith(
-      'someFile',
-      Object.assign({}, DEFAULT_RESOLVER_SETTINGS, {
-        moduleDirectory: [
-          'node_modules',
-          '/path/to/my/node_modules',
-          '/path/to/project/src/modules',
-        ],
-      })
-    );
+    expect(resolve.sync).toHaveBeenCalledWith('someFile', {
+      ...DEFAULT_RESOLVER_SETTINGS,
+      moduleDirectory: [
+        'node_modules',
+        '/path/to/my/node_modules',
+        '/path/to/project/src/modules',
+      ],
+    });
   });
 });
