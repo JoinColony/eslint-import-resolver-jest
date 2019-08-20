@@ -40,6 +40,23 @@ If you are using a separate config file for jest using the `--config` option you
 
 That's it!
 
+If you want to ensure that this resolver only applies to your test files, you can use ESLint's `overrides` configuration option:
+
+```json
+"overrides": [
+  {
+    "files": ["**/__tests__/**/*.js"],
+    "settings": {
+      "import/resolver": {
+        "jest": {
+          "jestConfigFile": "./jest.conf.json"
+        }
+      }
+    }
+  }
+]
+```
+
 #### Note
 
 It will only resolve the modules in your test files that you specified via `testRegex` or `testMatch` in your jest config.
