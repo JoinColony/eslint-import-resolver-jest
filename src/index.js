@@ -2,7 +2,6 @@
 
 const path = require('path');
 const findRoot = require('find-root');
-const mm = require('micromatch');
 const resolve = require('resolve');
 
 type ResolverConfig = {
@@ -48,11 +47,12 @@ exports.resolve = function resolver(
   config?: ResolverConfig
 ): ResolverResult {
   const jestConfig = getJestConfig(config, file);
-  if (!isTestFile(jestConfig, file)) {
-    return NOTFOUND;
-  }
   const pathToResolve = applyModuleNameMapper(jestConfig, source) || source;
-  const resolvedPath = resolvePath(jestConfig, path.dirname(file), pathToResolve);
+  const resolvedPath = resolvePath(
+    jestConfig,
+    path.dirname(file),
+    pathToResolve
+  );
   if (resolvedPath) {
     return {
       found: true,
@@ -90,34 +90,6 @@ function getJestConfig(config?: ResolverConfig = {}, file: Path): JestConfig {
   return Object.assign({}, JEST_DEFAULT_CONFIG, jestConfig);
 }
 
-/*
- * Check if we're on a Windows system
- */
-function isWindows() {
-  return process.platform === 'win32' || path.sep === '\\';
-}
-
-/*
- * Transform given string to a POSIX-style path.
- */
-function toPosixSlashes(str) {
-  return str.replace(/\\/g, '/');
-}
-
-/*
- * Check whether a file is a test file to see whether this resolver is applicable
- */
-function isTestFile(config: JestConfig, file: Path): boolean {
-  if (config.testRegex) {
-    return new RegExp(config.testRegex).test(file);
-  }
-  const testGlobs = config.testMatch.map(pattern => {
-    const expandedPattern = getAbsolutePath(config, pattern);
-    return isWindows() ? toPosixSlashes(expandedPattern) : expandedPattern;
-  });
-  return !!mm(file, testGlobs).length;
-}
-
 /**
  * See whether an import has a corresponding moduleNameMapper, map it and return the path
  */
@@ -139,7 +111,11 @@ function applyModuleNameMapper(jestConfig: JestConfig, source: Path): Path {
  * Will also attempt to resolve to an index file
  * Furthermore it'll look in moduleDirectories, if supplied
  */
-function resolvePath(jestConfig: JestConfig, basedir: Path, pathToResolve: Path): Path {
+function resolvePath(
+  jestConfig: JestConfig,
+  basedir: Path,
+  pathToResolve: Path
+): Path {
   const { moduleDirectories, moduleFileExtensions, modulePaths } = jestConfig;
   const absoluteModulePaths = modulePaths.map(
     mPath =>
