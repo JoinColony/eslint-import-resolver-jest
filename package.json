@@ -45,7 +45,7 @@
     "CHANGELOG.md"
   ],
   "peerDependencies": {
-    "eslint-plugin-import": ">=1.4.0"
+    "eslint-plugin-import": ">=1.16.0"
   },
   "devDependencies": {
     "@colony/eslint-config-colony": "8.0.0",
