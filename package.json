@@ -48,7 +48,7 @@
     "eslint-plugin-import": ">=1.4.0"
   },
   "devDependencies": {
-    "@colony/eslint-config-colony": "8.0.0",
+    "@colony/eslint-config-colony": "8.0.1",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.2.1",
     "eslint-config-airbnb-base": "^14.0.0",
