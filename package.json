@@ -1,6 +1,6 @@
 {
   "name": "eslint-import-resolver-jest",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "🃏 Jest import resolution plugin for eslint-plugin-import",
   "engines": {
     "node": ">=10.0.0"
