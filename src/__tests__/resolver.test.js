@@ -159,6 +159,20 @@ describe('Jest resolver', () => {
     );
   });
 
+  test('Resolves Node core modules properly', () => {
+    path.resolve.mockImplementationOnce(
+      () => './__tests__/package.regex.mock.json'
+    );
+    const result = jestResolver.resolve(
+      'fs',
+      '/path/to/project/__testsconfig__/iamtest.js'
+    );
+    expect(result).toEqual({
+      found: true,
+      path: null,
+    });
+  });
+
   test('Does not do anything without config', () => {
     path.resolve.mockImplementationOnce(
       () => './__tests__/jest.config.none.mock.json'
