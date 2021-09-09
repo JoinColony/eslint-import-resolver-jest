@@ -56,7 +56,7 @@ exports.resolve = function resolver(
   if (resolvedPath) {
     return {
       found: true,
-      path: resolve.isCore(resolvedPath) ? null : resolvedPath,
+      path: resolve.isCore(resolvedPath) ? undefined : resolvedPath,
     };
   }
   return NOTFOUND;
