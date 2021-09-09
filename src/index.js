@@ -10,7 +10,7 @@ type ResolverConfig = {
 
 type ResolverResult = {
   found: boolean,
-  path?: string,
+  path?: string | null,
 };
 
 type JestConfig = {
@@ -56,7 +56,7 @@ exports.resolve = function resolver(
   if (resolvedPath) {
     return {
       found: true,
-      path: resolve.isCore(resolvedPath) ? undefined : resolvedPath,
+      path: resolve.isCore(resolvedPath) ? null : resolvedPath,
     };
   }
   return NOTFOUND;
