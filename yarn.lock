@@ -139,10 +139,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@colony/eslint-config-colony@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@colony/eslint-config-colony/-/eslint-config-colony-8.0.0.tgz#b51d61c4e1de1e262576421cc6d1743c254a728c"
-  integrity sha512-pySIQVXmlAjd0xZitpQJFtxz/sDKzVe0RCFBdkmu9TADK5fzDouLohigLtz+oNDoigbKGbvSLHbnFPR6CbODFQ==
+"@colony/eslint-config-colony@8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@colony/eslint-config-colony/-/eslint-config-colony-8.0.1.tgz#55f5f3d3c02440992f5fe8adaaec70184f204481"
+  integrity sha512-9NF6G9gEn4orxTsny9t8NRZemsDhNFmPmxP+g2nxKs8jCDu0wLi7uJx3sljLdcVIu3AJTDIqwhOkrGoDjnWOrg==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
