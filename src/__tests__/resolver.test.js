@@ -169,7 +169,7 @@ describe('Jest resolver', () => {
     );
     expect(result).toEqual({
       found: true,
-      path: undefined,
+      path: null,
     });
   });
 
